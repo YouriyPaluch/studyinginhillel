@@ -4,8 +4,8 @@ use Homework3\PhpPro\Models\UrlOperator;
 
 $url = readline('Введіть url: ');
 
-$filePath = 'public/files/url-code.txt';
+$filePath = 'public/url-code.txt';
 $operator = new UrlOperator($filePath);
 echo $operator->getUrlCode($url);
-//echo $operator->getUrl('5daaaa2a');
+//echo $operator->getUrl('ee5436ca');
 echo PHP_EOL;
