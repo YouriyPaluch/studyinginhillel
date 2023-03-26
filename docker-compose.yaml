@@ -1,0 +1,36 @@
+version: "3"
+services:
+  php:
+    # імʼя контейнеру, яке будемо використовувати при вході на контейнер
+    container_name: php_pro_2
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    build:
+      context: ./
+      # посилання на докерфайл з налаштуванням контейнеру
+      dockerfile: "docker/configs/php/Dockerfile"
+    # встановлюємо змінні оточення
+    environment:
+      XDEBUG_CONFIG: "remote_host={{YOUR_IP_ADDRESS}}"
+      PHP_IDE_CONFIG: "serverName=docker"
+    # прописуємо синхронізацію директорій
+    volumes:
+      - ./:/srv/src/php_pro
+
+  nginx:
+    # імʼя контейнеру, яке будемо використовувати при вході на контейнер
+    container_name: php_pro_server_2
+    # використовуємо останню стабільну версію nginx
+    image: nginx:latest
+    # прописуємо порти
+    ports:
+      - "80:80"
+      - "443:443"
+    # прописуємо синхронізацію директорій
+    #        volumes:
+    #            - ./docker/configs/nginx/hosts:/etc/nginx/conf.d
+    #            - ./:/srv/src/php_pro
+    #            - ./docker/logs/nginx:/var/log/nginx
+    # nginx повʼязаний з php контейнером
+    links:
+      - php
