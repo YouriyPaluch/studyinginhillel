@@ -27,6 +27,11 @@ class UrlDecoder implements IUrlDecoder {
     {
         $storage = new UrlStorage($this->filePath);
         $content = strstr($storage->getFromStorage(), $urlCode);
-        return explode('->', $content)[1];
+        if (!empty(explode('->', $content)[1])) {
+            return explode('->', $content)[1];
+        } else {
+            return '';
+        }
+
     }
 }
