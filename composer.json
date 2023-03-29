@@ -1,0 +1,21 @@
+{
+    "name": "root/php_pro",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "7.*",
+        "monolog/monolog": "3.*",
+        "eonx-com/easy-random": "^4.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Homework\\PhpPro\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yourii Korchevskii"
+        }
+    ],
+    "minimum-stability": "stable"
+}

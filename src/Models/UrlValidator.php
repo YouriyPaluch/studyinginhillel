@@ -1,29 +1,51 @@
 <?php
 
-namespace Homework3\PhpPro\Models;
+namespace Homework\PhpPro\Models;
+
+use GuzzleHttp\Exception\GuzzleException;
+use Homework\PhpPro\Interfaces\IMyLogger;
+use InvalidArgumentException;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ConnectException;
 
 class UrlValidator {
+
     /**
-     * @param string $url
-     * @return void
+     * @param ClientInterface $client
+     * @param IMyLogger $logger
      */
-    public static function isUrl(string $url)
-    {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException('Url is not valid');
-        }
+    public function __construct(protected ClientInterface $client, protected IMyLogger $logger) {
     }
 
     /**
      * @param string $url
-     * @return void
+     * @return bool
      */
-    public static function isWorking(string $url)
+    public function isUrl(string $url): bool
     {
-       $headers = get_headers($url);
-       $responseCode = substr($headers[0], 9, 3);
-       if ($responseCode != 200) {
-           throw new \InvalidArgumentException('Url is not working');
-       }
+        if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
+            $this->logger->log('data was not valid url', 'warning');
+            throw new InvalidArgumentException('Url is not valid');
+        }
+        return true;
+    }
+
+    /**
+     * @param string $url
+     * @return bool
+     * @throws GuzzleException
+     */
+    public function isWorking(string $url): bool
+    {
+        $allowCodes = [
+            200, 201, 301, 302
+        ];
+
+        try {
+            $response = $this->client->request('GET', $url);
+            return (!empty($response->getStatusCode()) && in_array($response->getStatusCode(), $allowCodes));
+        } catch (ConnectException $e) {
+            $this->logger->log('Url was not have working connection' . $e->getMessage(), 'error');
+        }
     }
 }

@@ -1,11 +1,16 @@
 <?php
-require_once __DIR__ . '/../src/autoload.php';
-use Homework3\PhpPro\Models\UrlOperator;
 
-$url = readline('Введіть url: ');
+use Homework\PhpPro\Models\UrlOperator;
+
+
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+//$url = readline('Введіть url: ');
+$url = 'https://google.com';
 
 $filePath = 'public/url-code.txt';
 $operator = new UrlOperator($filePath);
-echo $operator->getUrlCode($url);
-//echo $operator->getUrl('ee5436ca');
+//echo $operator->startApplication($url);
+echo $operator->startApplication('JKWZRJYN');
 echo PHP_EOL;

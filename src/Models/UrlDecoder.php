@@ -1,37 +1,31 @@
 <?php
 
-namespace Homework3\PhpPro\Models;
+namespace Homework\PhpPro\Models;
 
-use Homework3\PhpPro\Interfaces\IUrlDecoder;
+use Homework\PhpPro\Interfaces\IMyLogger;
+use Homework\PhpPro\Interfaces\IUrlDecoder;
+use InvalidArgumentException;
 
 class UrlDecoder implements IUrlDecoder {
 
     /**
-     * @var string
+     * @param UrlStorage $storage
      */
-    protected $filePath;
-
-    /**
-     * @param string $filePath
-     */
-    public function __construct(string $filePath)
-    {
-        $this->filePath = $filePath;
+    public function __construct(protected UrlStorage $storage, protected IMyLogger $logger) {
     }
 
     /**
-     * @param string $urlCode
+     * @param string $code
+     * @throws InvalidArgumentException
      * @return string
      */
-    public function decode(string $urlCode): string
+    public function decode(string $code): string
     {
-        $storage = new UrlStorage($this->filePath);
-        $content = strstr($storage->getFromStorage(), $urlCode);
-        if (!empty(explode('->', $content)[1])) {
-            return explode('->', $content)[1];
-        } else {
-            return '';
+        try {
+            return $this->storage->getUrlByCode($code);
+        } catch (InvalidArgumentException $e) {
+            $this->logger->log('Url was not found in file' . $e->getMessage());
+            return $e->getMessage();
         }
-
-    }
+     }
 }

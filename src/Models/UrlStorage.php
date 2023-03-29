@@ -1,38 +1,73 @@
 <?php
 
-namespace Homework3\PhpPro\Models;
+namespace Homework\PhpPro\Models;
+
+use InvalidArgumentException;
 
 class UrlStorage
 {
-    /**
-     * @var string
-     */
-    protected $filePath;
+    protected array $data = [];
 
     /**
      * @param string $filePath
      */
-    public function __construct(string $filePath)
+    public function __construct(protected string $filePath)
     {
-        $this->filePath = $filePath;
+        $this->getData();
     }
 
     /**
-     * @param string $codeUrl
+     * @return void
+     */
+    public function getData(): void
+    {
+        if (file_exists($this->filePath)) {
+            $this->data = (array) json_decode(file_get_contents($this->filePath));
+        }
+    }
+
+    /**
      * @param string $url
      * @return string
      */
-    public function addToStorage(string $codeUrl, string $url): string
+    public function getCodeByUrl(string $url): string
     {
-        $stringToFile = $codeUrl . '->' . $url . '->' . PHP_EOL;
-        return file_put_contents($this->filePath, $stringToFile, FILE_APPEND | LOCK_EX);
+        if (!$code = array_search($url, $this->data)) {
+            throw new InvalidArgumentException('Code not found');
+        }
+        return $code;
     }
 
     /**
+     * @param string $code
      * @return string
      */
-    public function getFromStorage(): string
+    public function getUrlByCode(string $code): string
     {
-        return file_get_contents($this->filePath);
+        if (empty($this->data[$code])) {
+            throw new InvalidArgumentException('File not has code: ' . $code);
+        }
+
+        return $this->data[$code];
+    }
+
+    public function saveCode(string $code, string $url) {
+        $this->data[$code] = $url;
+        return true;
+    }
+
+    /**
+     * @param string $dataInFile
+     * @return void
+     */
+    public function addToStorage(string $dataInFile): void
+    {
+        $file = fopen($this->filePath, 'w+');
+        fwrite($file, $dataInFile);
+        fclose($file);
+    }
+
+    public function __destruct() {
+        $this->addToStorage(json_encode($this->data));
     }
 }

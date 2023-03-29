@@ -1,12 +1,14 @@
 <?php
 
-namespace Homework3\PhpPro\Interfaces;
+namespace Homework\PhpPro\Interfaces;
+
+use InvalidArgumentException;
 
 interface IUrlEncoder
 {
     /**
      * @param string $url
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      * @return string
      */
     public function encode(string $url): string;
