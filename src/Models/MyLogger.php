@@ -62,7 +62,5 @@ class MyLogger implements IMyLogger {
                 $log->info($message);
                 break;
         }
-
-        $log->error('Bar');
     }
 }
