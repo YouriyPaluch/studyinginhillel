@@ -8,30 +8,20 @@ use Homework\PhpPro\Interfaces\IMyLogger;
 
 class UrlOperator
 {
-    /**
-     * @var UrlStorage
-     */
-    protected UrlStorage $storage;
 
     /**
-     * @var IMyLogger|MyLogger
+     * @param UrlStorage $storage
+     * @param IMyLogger $logger
+     * @param UrlValidator $validator
      */
-    protected IMyLogger $logger;
-
-    /**
-     * @var UrlValidator
-     */
-    protected UrlValidator $validator;
-
-    /**
-     * @param string $filePath
-     */
-    public function __construct(protected string $filePath)
-    {
-        $this->storage = new UrlStorage($filePath . 'url-code.txt');
-        $this->logger = new MyLogger($filePath);
-        $this->validator = new UrlValidator(new Client(), $this->logger);
-    }
+    public function __construct(
+        protected UrlStorage $storage,
+        protected IMyLogger $logger,
+        protected UrlValidator $validator,
+        protected UrlEncoder $encoder,
+        protected UrlDecoder $decoder
+    )
+    {}
 
     /**
      * @param string $url
@@ -41,8 +31,7 @@ class UrlOperator
     public function getUrlCode(string $url): string
     {
         $this->validator->isWorking($url);
-        $encoder = new UrlEncoder($this->storage);
-        $code = $encoder->encode($url);
+        $code = $this->encoder->encode($url);
         return 'This URL has a code. Code: ' . $code;
     }
 
@@ -52,8 +41,7 @@ class UrlOperator
      */
     public function getUrl(string $code): string
     {
-        $decoder = new UrlDecoder($this->storage, $this->logger);
-        return $decoder->decode($code);
+        return $this->decoder->decode($code);
     }
 
     /**

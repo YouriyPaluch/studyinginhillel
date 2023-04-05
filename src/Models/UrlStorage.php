@@ -6,6 +6,7 @@ use InvalidArgumentException;
 
 class UrlStorage
 {
+
     protected array $data = [];
 
     /**
@@ -14,6 +15,13 @@ class UrlStorage
     public function __construct(protected string $filePath)
     {
         $this->getData();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilePath(): string {
+        return $this->filePath;
     }
 
     /**
