@@ -1,24 +1,23 @@
 <?php
 
 use GuzzleHttp\Client;
-use Homework\PhpPro\Models\MyLogger;
-use Homework\PhpPro\Models\UrlDecoder;
-use Homework\PhpPro\Models\UrlEncoder;
-use Homework\PhpPro\Models\UrlOperator;
-use Homework\PhpPro\Models\UrlStorage;
-use Homework\PhpPro\Models\UrlValidator;
+use Homework\PhpPro\Coder\MyLogger;
+use Homework\PhpPro\Coder\UrlDecoder;
+use Homework\PhpPro\Coder\UrlEncoder;
+use Homework\PhpPro\Coder\UrlOperator;
+use Homework\PhpPro\Coder\UrlStorage;
+use Homework\PhpPro\Coder\UrlValidator;
+use Homework\PhpPro\Core\Config;
+use Monolog\Logger;
 use UfoCms\ColoredCli\CliColor;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
 //$url = readline('Введіть url: ');
-$url = 'https://google.com';
+$url = 'http://goo.code';
 //$url = 'PN8K7N2W';
 
-$filePath = 'public/';
-
-$storage = new UrlStorage($filePath . 'url-code.txt');
-$logger = new MyLogger($filePath);
+$storage = new UrlStorage(Config::get('dbFile'));
+$logger = new MyLogger(Config::get('logFile'), new Logger('coder'));
 $validator = new UrlValidator(new Client(), $logger);
 $encoder = new UrlEncoder($storage);
 $decoder = new UrlDecoder($storage, $logger);

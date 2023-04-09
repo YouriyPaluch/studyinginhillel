@@ -1,10 +1,9 @@
 <?php
 
-namespace Homework\PhpPro\Models;
+namespace Homework\PhpPro\Coder;
 
-use Homework\PhpPro\Interfaces\IMyLogger;
-use Homework\PhpPro\Interfaces\IUrlEncoder;
 use EonX\EasyRandom\RandomGenerator;
+use Homework\PhpPro\Coder\Interfaces\IUrlEncoder;
 use InvalidArgumentException;
 
 class UrlEncoder implements IUrlEncoder

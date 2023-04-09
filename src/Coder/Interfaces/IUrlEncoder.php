@@ -1,6 +1,6 @@
 <?php
 
-namespace Homework\PhpPro\Interfaces;
+namespace Homework\PhpPro\Coder\Interfaces;
 
 use InvalidArgumentException;
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Homework\PhpPro\Models;
+namespace Homework\PhpPro\Coder;
 
-use GuzzleHttp\Exception\GuzzleException;
-use Homework\PhpPro\Interfaces\IMyLogger;
-use InvalidArgumentException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Exception\GuzzleException;
+use Homework\PhpPro\Coder\Interfaces\IMyLogger;
+use InvalidArgumentException;
 
 class UrlValidator {
 
@@ -45,7 +45,8 @@ class UrlValidator {
             $response = $this->client->request('GET', $url);
             return (!empty($response->getStatusCode()) && in_array($response->getStatusCode(), $allowCodes));
         } catch (ConnectException $e) {
-            $this->logger->log('Url was not have working connection' . $e->getMessage(), 'error');
+            $this->logger->log('Url was not have working connection ' . $e->getMessage(), 'error');
+            die('Url was not have working connection ' . $e->getMessage(). PHP_EOL);
         }
     }
 }

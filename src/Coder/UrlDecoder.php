@@ -1,9 +1,9 @@
 <?php
 
-namespace Homework\PhpPro\Models;
+namespace Homework\PhpPro\Coder;
 
-use Homework\PhpPro\Interfaces\IMyLogger;
-use Homework\PhpPro\Interfaces\IUrlDecoder;
+use Homework\PhpPro\Coder\Interfaces\IMyLogger;
+use Homework\PhpPro\Coder\Interfaces\IUrlDecoder;
 use InvalidArgumentException;
 
 class UrlDecoder implements IUrlDecoder {

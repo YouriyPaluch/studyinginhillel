@@ -1,0 +1,3 @@
+dbFile = "path to db-file"
+logFile = "path to log-file"
+codeLength = length of code

@@ -1,10 +1,9 @@
 <?php
 
-namespace Homework\PhpPro\Models;
+namespace Homework\PhpPro\Coder;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Homework\PhpPro\Interfaces\IMyLogger;
+use Homework\PhpPro\Coder\Interfaces\IMyLogger;
 
 class UrlOperator
 {
@@ -13,6 +12,8 @@ class UrlOperator
      * @param UrlStorage $storage
      * @param IMyLogger $logger
      * @param UrlValidator $validator
+     * @param UrlEncoder $encoder
+     * @param UrlDecoder $decoder
      */
     public function __construct(
         protected UrlStorage $storage,

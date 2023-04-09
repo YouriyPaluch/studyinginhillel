@@ -1,6 +1,6 @@
 <?php
 
-namespace Homework\PhpPro\Models;
+namespace Homework\PhpPro\Coder;
 
 use InvalidArgumentException;
 
@@ -59,7 +59,13 @@ class UrlStorage
         return $this->data[$code];
     }
 
-    public function saveCode(string $code, string $url) {
+    /**
+     * @param string $code
+     * @param string $url
+     * @return bool
+     */
+    public function saveCode(string $code, string $url): bool
+    {
         $this->data[$code] = $url;
         return true;
     }
