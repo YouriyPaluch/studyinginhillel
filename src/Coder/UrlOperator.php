@@ -3,21 +3,18 @@
 namespace Homework\PhpPro\Coder;
 
 use GuzzleHttp\Exception\GuzzleException;
-use Homework\PhpPro\Coder\Interfaces\IMyLogger;
 
 class UrlOperator
 {
 
     /**
      * @param UrlStorage $storage
-     * @param IMyLogger $logger
      * @param UrlValidator $validator
      * @param UrlEncoder $encoder
      * @param UrlDecoder $decoder
      */
     public function __construct(
         protected UrlStorage $storage,
-        protected IMyLogger $logger,
         protected UrlValidator $validator,
         protected UrlEncoder $encoder,
         protected UrlDecoder $decoder
@@ -53,11 +50,12 @@ class UrlOperator
     public function startApplication(string $string): string
     {
         if (empty($string)) {
-            return 'Ви не ввели жодних данних';
+            $result = 'Ви не ввели жодних данних';
         } elseif (str_starts_with($string, 'http')) {
-            return $this->getUrlCode($string);
+            $result = $this->getUrlCode($string);
         } else {
-            return $this->getUrl($string);
+            $result = $this->getUrl($string);
         }
+        return $result;
     }
 }

@@ -6,7 +6,8 @@ use Exception;
 use InvalidArgumentException;
 use TypeError;
 
-class Config {
+class Config
+{
 
     /**
      * @var array

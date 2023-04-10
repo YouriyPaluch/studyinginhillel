@@ -20,7 +20,8 @@ class UrlStorage
     /**
      * @return string
      */
-    public function getFilePath(): string {
+    public function getFilePath(): string
+    {
         return $this->filePath;
     }
 
@@ -81,7 +82,8 @@ class UrlStorage
         fclose($file);
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->addToStorage(json_encode($this->data));
     }
 }

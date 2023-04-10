@@ -12,8 +12,8 @@ class UrlEncoder implements IUrlEncoder
      * @param UrlStorage $storage
      * @param int $lengthCode
      */
-    public function __construct(protected UrlStorage $storage, protected int $lengthCode = 8) {
-    }
+    public function __construct(protected UrlStorage $storage, protected RandomGenerator $randomGenerator = new RandomGenerator(), protected int $lengthCode = 8)
+    {}
 
     /**
      * @param string $url
@@ -25,7 +25,7 @@ class UrlEncoder implements IUrlEncoder
         try {
             $code = $this->storage->getCodeByUrl($url);
         } catch (InvalidArgumentException $e) {
-            $code = (new RandomGenerator())
+            $code = $this->randomGenerator
                 ->randomString(8)
                 ->userFriendly();
             $this->storage->saveCode($code, $url);

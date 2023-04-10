@@ -2,17 +2,20 @@
 
 namespace Homework\PhpPro\Coder;
 
-use Homework\PhpPro\Coder\Interfaces\IMyLogger;
+
 use Homework\PhpPro\Coder\Interfaces\IUrlDecoder;
+use Monolog\Logger;
 use InvalidArgumentException;
 
-class UrlDecoder implements IUrlDecoder {
+class UrlDecoder implements IUrlDecoder
+{
 
     /**
      * @param UrlStorage $storage
+     * @param Logger $logger
      */
-    public function __construct(protected UrlStorage $storage, protected IMyLogger $logger) {
-    }
+    public function __construct(protected UrlStorage $storage, protected Logger $logger)
+    {}
 
     /**
      * @param string $code
@@ -24,8 +27,8 @@ class UrlDecoder implements IUrlDecoder {
         try {
             return $this->storage->getUrlByCode($code);
         } catch (InvalidArgumentException $e) {
-            $this->logger->log('Url was not found in file. Exception message: ' . $e->getMessage());
-            return $e->getMessage();
+            $this->logger->error('Url was not found in file. Exception message: ' . $e->getMessage());
+            throw $e;
         }
      }
 }
