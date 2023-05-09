@@ -34,3 +34,16 @@ services:
     # nginx повʼязаний з php контейнером
     links:
       - php
+
+  db_mysql:
+    image: mysql:latest
+    container_name: php_pro_2_mysql
+    ports:
+      - 13306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: php_pro
+      MYSQL_USER: adcd
+      MYSQL_PASSWORD: password123
+    volumes:
+      - ./docker/databases/mysql_dump:/docker-entrypoint-initdb.d

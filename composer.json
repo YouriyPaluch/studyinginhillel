@@ -5,7 +5,9 @@
         "guzzlehttp/guzzle": "7.*",
         "monolog/monolog": "3.*",
         "eonx-com/easy-random": "^4.3",
-        "ufo-cms/colored_cli": " *"
+        "ufo-cms/colored_cli": " *",
+        "illuminate/database": "^10.9",
+        "ext-pdo": "*"
     },
     "license": "MIT",
     "autoload": {
