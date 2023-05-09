@@ -25,7 +25,7 @@ class DatabaseAR {
             'driver' => $dbDriver,
             'host' => $host,
             'database' => $dataBase,
-            'user' => $user,
+            'username' => $user,
             'password' => $pass,
             'charset' => $charset,
             'collation' => $collation,

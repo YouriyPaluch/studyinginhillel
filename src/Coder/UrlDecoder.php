@@ -4,6 +4,7 @@ namespace Homework\PhpPro\Coder;
 
 
 use Homework\PhpPro\Coder\Interfaces\IUrlDecoder;
+use Homework\PhpPro\Coder\Interfaces\IUrlStorage;
 use Monolog\Logger;
 use InvalidArgumentException;
 
@@ -11,10 +12,10 @@ class UrlDecoder implements IUrlDecoder
 {
 
     /**
-     * @param UrlStorage $storage
+     * @param IUrlStorage $storage
      * @param Logger $logger
      */
-    public function __construct(protected UrlStorage $storage, protected Logger $logger)
+    public function __construct(protected IUrlStorage $storage, protected Logger $logger)
     {}
 
     /**

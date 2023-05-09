@@ -12,33 +12,32 @@ use Monolog\Level;
 use Monolog\Logger;
 use UfoCms\ColoredCli\CliColor;
 use Homework\PhpPro\ORM\ActiveRecord\DatabaseAR;
-use Homework\PhpPro\ORM\ActiveRecord\Models\UrlCode;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+new DatabaseAR(Config::get('db.name'), Config::get('db.username'), Config::get('db.password'));
 
-$connection = new PDO("mysql:host=db_mysql;dbname=php_pro", "korchevskii", "password");
+$url = readline(CliColor::BLUE->value . 'Введіть url:' . CliColor::RESET->value . PHP_EOL);
+//$url = 'https://google.com';
+//$url = 'D3TV9B78';
 
-$all = $connection->query("select * from url_codes")->fetchAll();
-$databaseAr = new DatabaseAR(Config::get('db.name'), Config::get('db.login'), Config::get('db.password'));
-$er = 321;
-$urlCode = UrlCode::all();
-$e = 123;
-////$url = readline('Введіть url: ');
-////$url = 'https://google.com';
-//$url = 'PN8K7N2W';
-//
-//$logger = new Logger('coder');
-//$logger->pushHandler(new StreamHandler(Config::get('logFile'), Level::Notice));
-//
-//$storage = new UrlStorage(Config::get('dbFile'));
-//$validator = new UrlValidator(new Client(), $logger);
-//$encoder = new UrlEncoder($storage);
-//$decoder = new UrlDecoder($storage, $logger);
-//
-//
-//$operator = new UrlOperator($storage, $validator, $encoder, $decoder);
-//$text = $operator->startApplication($url);
-//
-//echo CliColor::GREEN->value . $text . CliColor::RESET->value;
+$logger = new Logger('coder');
+$logger->pushHandler(new StreamHandler(Config::get('logFile'), Level::Notice));
+
+$storageType = readline(CliColor::GREEN->value . 'Виберіть місце зберігання: F чі D, де F - файл, D - база данних' . CliColor::RESET->value . PHP_EOL);
+//$storageType = 'F';
+$methodName = 'getUrlStorage' . $storageType;
+
+if (method_exists(UrlStorage::class, $methodName)) {
+    $storage = UrlStorage::$methodName();
+    $validator = new UrlValidator(new Client(), $logger);
+    $encoder = new UrlEncoder($storage);
+    $decoder = new UrlDecoder($storage, $logger);
+
+    $operator = new UrlOperator($storage, $validator, $encoder, $decoder);
+    $text = $operator->startApplication($url);
+    echo CliColor::GREEN->value . $text . CliColor::RESET->value;
+} else {
+    echo CliColor::RED->value . 'Неправильний вибір сховища' . CliColor::RESET->value;
+}
 
 echo PHP_EOL;

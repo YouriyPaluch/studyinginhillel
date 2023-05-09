@@ -3,21 +3,22 @@
 namespace Homework\PhpPro\Coder;
 
 use GuzzleHttp\Exception\GuzzleException;
+use Homework\PhpPro\Coder\Interfaces\IUrlStorage;
 
 class UrlOperator
 {
 
     /**
-     * @param UrlStorage $storage
+     * @param IUrlStorage $storage
      * @param UrlValidator $validator
      * @param UrlEncoder $encoder
      * @param UrlDecoder $decoder
      */
     public function __construct(
-        protected UrlStorage $storage,
-        protected UrlValidator $validator,
-        protected UrlEncoder $encoder,
-        protected UrlDecoder $decoder
+        protected IUrlStorage $storage,
+        protected UrlValidator     $validator,
+        protected UrlEncoder       $encoder,
+        protected UrlDecoder       $decoder
     )
     {}
 

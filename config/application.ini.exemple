@@ -5,5 +5,5 @@ codeLength = length of code
 
 [db]
 db.name = your_db_name
-db.login = your_login
+db.username = your_login
 db.password = your_password

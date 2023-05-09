@@ -62,7 +62,7 @@ INSERT INTO `catalog_city` VALUES (3235,'db5c88ce-391c-11dd-90d9-001a92567626',7
 
 create table php_pro.url_codes
 (
-    id INT         not null auto_increment,
+    id           INT         not null auto_increment,
     url          text        not null,
     url_code     varchar(10) not null,
     constraint url_codes_pk

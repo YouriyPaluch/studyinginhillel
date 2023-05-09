@@ -4,15 +4,21 @@ namespace Homework\PhpPro\Coder;
 
 use EonX\EasyRandom\RandomGenerator;
 use Homework\PhpPro\Coder\Interfaces\IUrlEncoder;
+use Homework\PhpPro\Coder\Interfaces\IUrlStorage;
 use InvalidArgumentException;
 
 class UrlEncoder implements IUrlEncoder
 {
     /**
-     * @param UrlStorage $storage
+     * @param IUrlStorage $storage
+     * @param RandomGenerator $randomGenerator
      * @param int $lengthCode
      */
-    public function __construct(protected UrlStorage $storage, protected RandomGenerator $randomGenerator = new RandomGenerator(), protected int $lengthCode = 8)
+    public function __construct(
+        protected IUrlStorage $storage,
+        protected RandomGenerator $randomGenerator = new RandomGenerator(),
+        protected int $lengthCode = 8
+    )
     {}
 
     /**
@@ -24,9 +30,9 @@ class UrlEncoder implements IUrlEncoder
     {
         try {
             $code = $this->storage->getCodeByUrl($url);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             $code = $this->randomGenerator
-                ->randomString(8)
+                ->randomString($this->lengthCode)
                 ->userFriendly();
             $this->storage->saveCode($code, $url);
         }
