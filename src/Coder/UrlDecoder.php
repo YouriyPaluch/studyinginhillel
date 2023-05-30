@@ -28,7 +28,7 @@ class UrlDecoder implements IUrlDecoder
         try {
             return $this->storage->getUrlByCode($code);
         } catch (InvalidArgumentException $e) {
-            $this->logger->error('Url was not found in file. Exception message: ' . $e->getMessage());
+//            $this->logger->error('Url was not found in file. Exception message: ' . $e->getMessage());
             throw $e;
         }
      }

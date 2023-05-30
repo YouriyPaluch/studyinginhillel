@@ -16,21 +16,23 @@ services:
     # прописуємо синхронізацію директорій
     volumes:
       - ./:/srv/src/php_pro
+    links:
+      - db_mysql
 
   nginx:
     # імʼя контейнеру, яке будемо використовувати при вході на контейнер
-    container_name: php_pro_server_2
+    container_name: php_pro_2_server
     # використовуємо останню стабільну версію nginx
     image: nginx:latest
     # прописуємо порти
     ports:
       - "80:80"
-      - "443:443"
+      - "433:433"
     # прописуємо синхронізацію директорій
-    #        volumes:
-    #            - ./docker/configs/nginx/hosts:/etc/nginx/conf.d
-    #            - ./:/srv/src/php_pro
-    #            - ./docker/logs/nginx:/var/log/nginx
+    volumes:
+      - ./:/srv/src/php_pro
+      - ./docker/configs/nginx:/etc/nginx/conf.d
+      - ./docker/logs/nginx:/var/log/nginx
     # nginx повʼязаний з php контейнером
     links:
       - php

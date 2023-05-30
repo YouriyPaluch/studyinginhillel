@@ -25,7 +25,7 @@ class UrlValidator
     public function isUrl(string $url): bool
     {
         if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
-            $this->logger->error('data was not valid url');
+//            $this->logger->error('data was not valid url');
             throw new InvalidArgumentException('Url is not valid');
         }
         return true;
@@ -46,7 +46,7 @@ class UrlValidator
             $response = $this->client->request('GET', $url);
             return (!empty($response->getStatusCode()) && in_array($response->getStatusCode(), $allowCodes));
         } catch (ConnectException $e) {
-            $this->logger->error('Url was not have working connection ' . $e->getMessage());
+//            $this->logger->error('Url was not have working connection ' . $e->getMessage());
             throw $e;
         }
     }

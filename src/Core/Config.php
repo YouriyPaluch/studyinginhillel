@@ -2,7 +2,6 @@
 
 namespace Homework\PhpPro\Core;
 
-use Exception;
 use InvalidArgumentException;
 use TypeError;
 
@@ -20,14 +19,14 @@ class Config
      * @param string $type
      * @return string
      */
-    static public function get(string $configName, string $fileName = 'application', string $type = 'ini'): string
+    static public function get(string $configName, string $configPath = 'config/', string $fileName = 'application', string $type = 'ini'): string
     {
         if (!is_string($fileName)) {
             throw new TypeError('Name of config must be string');
         }
 
         if (!array_key_exists($configName, self::$configs)) {
-            $fileName = 'config/' . $fileName . '.' . $type;
+            $fileName = $configPath . $fileName . '.' . $type;
 
             if (!file_exists($fileName)) {
                 throw new InvalidArgumentException('File not exists');
